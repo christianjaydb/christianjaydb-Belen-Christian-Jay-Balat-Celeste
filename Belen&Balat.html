@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belen&Balat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            color: #333;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            background-color: black;
+        }
+        .main-header video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            margin-top: 0;
+            background: transparent;
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            flex-grow: 1;
+            padding: 30px;
+            padding-top: 60px;
+            overflow: hidden;
+        }
+        .profile {
+            width: 45%;
+            max-width: 600px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: transform 0.3s ease, width 0.3s ease;
+            z-index: 2;
+        }
+        .profile-header {
+            background: linear-gradient(145deg, #808080, #696969);
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .profile-header:hover {
+            background-color: gray;
+        }
+        .profile-header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+        .profile-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: white;
+            font-size: 1.5rem;
+            margin: 10px 0;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .profile-body {
+            display: none;
+            padding: 25px;
+            background: white;
+            border-radius: 20px;
+            margin: 15px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            /* Add smooth scrolling behavior */
+            scroll-behavior: smooth;
+            /* Add fade in animation */
+            animation: fadeIn 0.5s ease;
+        }
+        .section {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f7f7f7;
+        }
+        .section h3 {
+            color: #151B54;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .centered {
+            position: fixed;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            z-index: 1000;
+            background-color: white;
+            max-height: 80vh;
+            overflow-y: auto;
+            max-width: 800px;
+            margin: 20px auto;
+            border-radius: 25px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .bottom-container {
+            background-color: #f8f8f8;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .profile-buttons {
+            padding: 15px;
+            background: linear-gradient(to bottom, white, #f8f8f8);
+            border-radius: 0 0 20px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+            position: sticky; /* Make buttons sticky */
+            top: 0; /* Stick to top */
+            z-index: 100; /* Ensure buttons stay above content */
+        }
+
+        .profile-btn {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            padding: 10px 20px;
+            border-radius: 25px;
+            letter-spacing: 0.5px;
+            background: linear-gradient(145deg, #808080, #696969);
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            color: white; /* Default white text */
+            transition: all 0.3s ease; /* Ensure smooth color transition */
+        }
+
+        .profile-btn:hover {
+            color: black; /* Text becomes black on hover */
+        }
+
+        .learn-btn {
+            background: linear-gradient(145deg, #808080, #696969);
+            color: white; /* Default white text */
+            border: 1px solid #666;
+            font-weight: 400;
+        }
+
+        .learn-btn:hover {
+            background: linear-gradient(145deg, #696969, #595959);
+            color: black; /* Text becomes black on hover */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-1px);
+        }
+
+        .gallery-btn {
+            background: linear-gradient(145deg, #808080, #696969);
+            color: white; /* Default white text */
+            border: 1px solid #666;
+            font-weight: 400;
+        }
+
+        .gallery-btn:hover {
+            background: linear-gradient(145deg, #696969, #595959);
+            color: black; /* Text becomes black on hover */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-1px);
+        }
+
+        .back-btn {
+            position: static;
+            padding: 8px 16px;
+            background: linear-gradient(145deg, #808080, #696969);
+            color: white; /* Default white text */
+            border: 1px solid #666;
+            border-radius: 20px;
+            cursor: pointer;
+            display: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(145deg, #696969, #595959);
+            color: black; /* Text becomes black on hover */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+
+        /* Tab button styles */
+        .tab-btn {
+            color: #000;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .tab-btn.active {
+            color: #000;
+            border-bottom: 2px solid #999;
+            font-weight: bold;
+        }
+
+        /* Gallery Styles */
+        .gallery-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 2000;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #808080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 2001;
+        }
+
+        .gallery-close:hover {
+            background: #696969;
+            transform: translateY(-2px);
+        }
+
+        /* Initially hide gallery and back buttons */
+        .gallery-btn,
+        .back-btn {
+            display: none;
+        }
+
+        /* Show Learn About Me only in non-centered state */
+        .learn-btn {
+            display: block;
+        }
+
+        /* When profile is centered (opened) */
+        .centered .learn-btn {
+            display: none;
+        }
+
+        .centered .gallery-btn {
+            display: block; /* Show gallery button when centered */
+        }
+
+        .centered .back-btn {
+            display: inline-block;
+        }
+
+        /* Profile buttons container */
+        .profile-buttons {
+            padding: 15px;
+            background: linear-gradient(to bottom, white, #f8f8f8);
+            border-radius: 0 0 20px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+            position: sticky; /* Make buttons sticky */
+            top: 0; /* Stick to top */
+            z-index: 100; /* Ensure buttons stay above content */
+        }
+
+        /* When profile is centered */
+        .centered .profile-buttons {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds subtle shadow when scrolling */
+        }
+
+        /* Ensure the back button stays visible */
+        .centered .back-btn {
+            display: inline-block;
+        }
+
+        /* Remove the padding adjustment that was for absolute positioning */
+        .centered .profile-header {
+            position: relative;
+            padding-right: 0;
+        }
+
+        /* Profile section hover animations */
+        .profile {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
+        }
+
+        .profile:hover:not(.centered) {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Profile header hover effect */
+        .profile-header {
+            transition: all 0.3s ease;
+        }
+
+        .profile:not(.centered):hover .profile-header {
+            background: #8a8a8a; /* Slightly darker on hover */
+        }
+
+        /* Button hover animations */
+        .profile-btn, .back-btn {
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover, .back-btn:hover {
+            background: linear-gradient(145deg, #e6e6e6, #dcdcdc);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* Profile image hover effect */
+        .profile-header img {
+            transition: all 0.3s ease;
+        }
+
+        .profile:not(.centered):hover .profile-header img {
+            transform: scale(1.05);
+        }
+
+        /* Text hover effect */
+        .profile-header h2 {
+            transition: all 0.3s ease;
+        }
+
+        .profile:not(.centered):hover .profile-header h2 {
+            transform: scale(1.02);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Additional text styling */
+        p {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        /* When in grid view */
+        .container {
+            gap: 30px;
+            padding: 30px;
+        }
+
+        /* Profile body improvements */
+        .profile-body {
+            padding: 25px;
+            background: white;
+            border-radius: 20px;
+            margin: 15px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Profile section styling */
+        .profile-section {
+            margin-bottom: 25px;
+            padding: 25px;
+            background: linear-gradient(to bottom right, #ffffff, #f8f9fa);
+            border-radius: 15px;
+            border: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .profile-section:hover {
+            background: linear-gradient(to bottom right, #F5F5F5, #EEEEEE);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .profile-section:hover .section-header,
+        .profile-section:hover .section-content,
+        .profile-section:hover .info-label,
+        .profile-section:hover .info-value {
+            color: #000000;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #000000;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(0,0,0,0.15);
+            transition: border-color 0.3s ease;
+        }
+
+        .section-content {
+            line-height: 1.7;
+            color: #000000;
+            padding: 0 5px;
+        }
+
+        .info-item {
+            padding: 12px 0;
+            border-bottom: 0.5px solid rgba(0,0,0,0.15);
+            transition: border-color 0.3s ease;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #000000;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            color: #000000;
+            font-size: 14px;
+            padding-left: 5px;
+        }
+
+        /* Contact info styling */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        .info-value {
+            color: #000000;
+            font-size: 14px;
+            padding-left: 5px;
+        }
+
+        /* Personal info styling */
+        .personal-info,
+        .education-info,
+        .hobbies-info,
+        .skills-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        .info-value {
+            color: #000000;
+            font-size: 14px;
+            padding-left: 5px;
+        }
+
+        .contact-info .info-value,
+        .personal-info .info-value,
+        .education-info .info-value,
+        .hobbies-info .info-value,
+        .skills-info .info-value {
+            color: #000000;
+        }
+
+        /* Normal state - darker lines against white background */
+        .section-header {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #000000;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(0,0,0,0.15); /* Darker when not hovered */
+            transition: border-color 0.3s ease;
+        }
+
+        .info-item {
+            padding: 12px 0;
+            border-bottom: 0.5px solid rgba(0,0,0,0.15); /* Darker when not hovered */
+            transition: border-color 0.3s ease;
+        }
+
+        /* Hover state - darker lines against light gray background */
+        .profile-section:hover .section-header {
+            border-bottom: 2px solid rgba(0,0,0,0.25); /* Even darker on hover */
+        }
+
+        .profile-section:hover .info-item {
+            border-bottom: 0.5px solid rgba(0,0,0,0.25); /* Even darker on hover */
+        }
+
+        .info-item:last-child,
+        .info-item:nth-last-child(1),
+        .profile-section:hover .info-item:last-child,
+        .profile-section:hover .info-item:nth-last-child(1) {
+            border-bottom: none;
+        }
+
+        /* Add media query for smaller screens */
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .profile {
+                width: 80%;
+            }
+        }
+
+        .gallery-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .gallery-modal.active {
+            display: flex;
+        }
+
+        .modal-image {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .section-header i {
+            margin-right: 10px;
+            color: #000000;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Update container styles for mobile */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 15px;
+                gap: 20px;
+            }
+
+            .profile {
+                width: 95%;
+                max-width: none;
+            }
+
+            /* Adjust header height for mobile */
+            .main-header {
+                height: 150px;
+            }
+
+            /* Adjust profile header for mobile */
+            .profile-header {
+                padding: 15px;
+            }
+
+            .profile-header img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-header h2 {
+                font-size: 1.2rem;
+            }
+
+            /* Adjust buttons for mobile */
+            .profile-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .profile-btn, .back-btn {
+                width: 100%;
+                padding: 12px;
+            }
+
+            /* Adjust gallery for mobile */
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .gallery-close {
+                top: 10px;
+                right: 10px;
+                padding: 10px 25px;
+                font-size: 14px;
+            }
+
+            /* Adjust centered profile for mobile */
+            .centered {
+                width: 95%;
+                margin: 10px;
+            }
+
+            /* Adjust profile sections for mobile */
+            .profile-section {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .section-header {
+                font-size: 1rem;
+            }
+
+            .info-label, .info-value {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Add styles for very small screens */
+        @media (max-width: 480px) {
+            .profile-header img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .profile-header h2 {
+                font-size: 1.1rem;
+            }
+
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+
+        /* Add smooth scrolling for iOS */
+        @supports (-webkit-overflow-scrolling: touch) {
+            .profile-body {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        /* Add these styles for the back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(145deg, #808080, #696969);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-to-top:hover {
+            background: linear-gradient(145deg, #696969, #595959);
+            color: black;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Add this to your mobile media queries */
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 10px;
+                right: 10px;
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        /* Update the gallery styles for even spacing */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Creates 4 equal columns */
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            padding-bottom: 80px;
+            box-sizing: border-box;
+        }
+
+        .gallery-item {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* Creates a perfect square */
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        /* Update responsive gallery layout with bottom padding */
+        @media (max-width: 1200px) {
+            .gallery-container {
+                grid-template-columns: repeat(3, 1fr);
+                padding: 30px;
+                padding-bottom: 70px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 20px;
+                padding-bottom: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-container {
+                grid-template-columns: repeat(1, 1fr);
+                gap: 10px;
+                padding: 15px;
+                padding-bottom: 50px;
+            }
+        }
+
+        /* Add styles for when profile is opened */
+        .profile.centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 800px;
+            height: auto;
+            max-height: 90vh;
+            overflow-y: auto;
+            z-index: 1000;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            margin: 0;
+        }
+
+        /* Update main-heading position */
+        .main-heading {
+            position: absolute;
+            top: 15%; /* Changed to 5% to position it near the top */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #808080;
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            z-index: 0;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Ensure container and profiles maintain their position */
+        .container {
+            position: relative;
+            z-index: 1;
+            margin-top: 0;
+            background: transparent;
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            flex-grow: 1;
+            padding: 30px;
+            overflow: hidden;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 768px) {
+            .main-heading {
+                font-size: 2.5rem;
+                top: 5%; /* Keep consistent with desktop */
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.learn-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const profile = button.closest('.profile');
+                    const profileBody = profile.querySelector('.profile-body');
+                    
+                    // Enable scrolling when profile is opened
+                    document.body.classList.add('profile-open');
+                    document.querySelector('.container').classList.add('profile-open');
+                    
+                    // Close all profiles first
+                    document.querySelectorAll('.profile').forEach(p => {
+                        p.classList.remove('centered');
+                        p.querySelector('.profile-body').style.display = 'none';
+                    });
+
+                    // Center clicked profile
+                    profile.classList.add('centered');
+                    profileBody.style.display = 'block';
+                });
+            });
+
+            document.querySelectorAll('.back-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const profile = button.closest('.profile');
+                    const profileBody = profile.querySelector('.profile-body');
+                    
+                    // Disable scrolling when returning to home
+                    document.body.classList.remove('profile-open');
+                    document.querySelector('.container').classList.remove('profile-open');
+                    
+                    profile.classList.remove('centered');
+                    profileBody.style.display = 'none';
+                });
+            });
+
+            // Add gallery functionality
+            document.querySelectorAll('.gallery-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const profile = button.closest('.profile');
+                    const isFirstProfile = profile === document.querySelector('.profile:first-child');
+                    const galleryId = isFirstProfile ? 'gallery-cj' : 'gallery-celeste';
+                    const gallery = document.getElementById(galleryId);
+                    
+                    if (gallery) {
+                        gallery.style.display = 'block';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.gallery-close').forEach(button => {
+                button.addEventListener('click', () => {
+                    const gallery = button.closest('.gallery-overlay');
+                    gallery.style.display = 'none';
+                });
+            });
+
+            // Optional: Add click event to gallery items for larger view
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const img = item.querySelector('img');
+                    if (img) {
+                        // You could add a lightbox here if desired
+                        // For now, just prevent default behavior
+                        event.preventDefault();
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<!-- Main Header with Video -->
+<header class="main-header">
+    <video autoplay muted loop>
+        <source src="lau.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</header>
+
+<h1 class="main-heading">LEARN ABOUT US</h1>
+
+<!-- Profiles Container -->
+<div class="container">
+    <!-- First Profile -->	
+    <div class="profile">
+        <div class="profile-header">
+            <img src="cj.png" alt="Christian Jay">
+            <h2>Christian Jay D. Belen</h2>
+        </div>	
+        <div class="profile-buttons">
+            <button class="profile-btn learn-btn">Learn About Me</button>
+            <button class="profile-btn gallery-btn">See My Gallery</button>
+            <button class="back-btn">Exit</button>
+        </div>
+        <div class="profile-body">
+            <div class="profile-section">
+                <h3 class="section-header">
+                    <i class="fas fa-user"></i>About Me
+                </h3>
+                <div class="section-content">
+                    <p>Hi! I'm Christian Jay De Torres Belen, and I'm a Sagittarius who loves to make people laugh. I enjoy cracking jokes and bringing smiles to everyone around me. Movies and music are my favorite things - I can spend hours watching all kinds of films and listening to different types of music. Being a Sagittarius means I'm always excited to try new things and stay positive. When I'm not studying, you'll probably find me sharing funny stories with friends, recommending movies, or discovering new songs to add to my playlist.</p>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3 class="section-header">
+                    <i class="fas fa-address-book"></i>Contact Information
+                </h3>
+                <div class="contact-info">
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <span class="info-value">christianjaydb@gmail.com</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Phone</span>
+                        <span class="info-value">09062190209</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Facebook</span>
+                        <span class="info-value">Christian Belen</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Instagram</span>
+                        <span class="info-value">n.xijae</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3 class="section-header">
+                    <i class="fas fa-info-circle"></i>Personal Information
+                </h3>
+                <div class="personal-info">
+                    <div class="info-item">
+                        <span class="info-label">Age</span>
+                        <span class="info-value">20</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Birthday</span>
+                        <span class="info-value">December 09, 2003</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Address</span>
+                        <span class="info-value">Banay-Banay, Padre Garcia, Batangas</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3 class="section-header">
+                    <i class="fas fa-graduation-cap"></i>Education
+                </h3>
+                <div class="education-info">
+                    <div class="info-item">
+                        <span class="info-label">School</span>
+                        <span class="info-value">Batangas State University - TNEU Lipa</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Course</span>
+                        <span class="info-value">Bachelor of Industrial Technology - CPET</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Year Level</span>
+                        <span class="info-value">Third Year</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3 class="section-header">
+                    <i class="fas fa-heart"></i>Hobbies
+                </h3>
+                <div class="hobbies-info">
+                    <div class="info-item">
+                        <span class="info-label">Indoor</span>
+                        <span class="info-value">Watching movies, Listening to music</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Outdoor</span>
+                        <span class="info-value">Walking, Biking, Watching sunset</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3 class="section-header">
+                    <i class="fas fa-star"></i>Skills
+                </h3>
+                <div class="skills-info">
+                    <div class="info-item">
+                        <span class="info-label">Technical</span>
+                        <span class="info-value">Basic HTML and CSS coding</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Soft Skills</span>
+                        <span class="info-value">Effective Communication</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Profile -->
+    <div class="profile">
+        <div class="profile-header">
+            <img src="cl.png" alt="Celeste D. Balat">
+            <h2>Celeste D. Balat</h2>
+        </div>
+        <div class="profile-buttons">
+            <button class="profile-btn learn-btn">Learn About Me</button>
+            <button class="profile-btn gallery-btn">See My Gallery</button>
+            <button class="back-btn">Exit</button>
+        </div>
+        <div class="profile-body">
+            <div class="profile-section">
+                <h3 class="section-header">
+                    <i class="fas fa-user"></i>About Me
+                </h3>
+                <div class="section-content">
+                    <p>Hi! I'm Celeste D. Balat, and I'm a Sagittarius who loves watching movies. Being a Sagittarius means I'm adventurous and optimistic, always looking for new experiences. Movies are my escape - I can spend hours watching different genres and getting lost in various storylines. When I'm not studying, you'll probably find me exploring new films or recommending my favorite movies to friends.</p>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3 class="section-header">
+                    <i class="fas fa-address-book"></i>Contact Information
+                </h3>
+                <div class="contact-info">
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <span class="info-value">celestebalat@gmail.com</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Phone</span>
+                        <span class="info-value">09123456789</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Facebook</span>
+                        <span class="info-value">Celeste Balat</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Instagram</span>
+                        <span class="info-value">celestebalat</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3 class="section-header">
+                    <i class="fas fa-info-circle"></i>Personal Information
+                </h3>
+                <div class="personal-info">
+                    <div class="info-item">
+                        <span class="info-label">Age</span>
+                        <span class="info-value">22</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Birthday</span>
+                        <span class="info-value">January 20, 2002</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Address</span>
+                        <span class="info-value">Bagong Pook, Lipa City, Batangas</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3 class="section-header">
+                    <i class="fas fa-graduation-cap"></i>Education
+                </h3>
+                <div class="education-info">
+                    <div class="info-item">
+                        <span class="info-label">School</span>
+                        <span class="info-value">Batangas State University - TNEU Lipa</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Course</span>
+                        <span class="info-value">Bachelor of Industrial Technology - CPET</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Year Level</span>
+                        <span class="info-value">Third Year</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3 class="section-header">
+                    <i class="fas fa-heart"></i>Hobbies
+                </h3>
+                <div class="hobbies-info">
+                    <div class="info-item">
+                        <span class="info-label">Indoor</span>
+                        <span class="info-value">Watching Movies</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Outdoor</span>
+                        <span class="info-value">Riding Motorcycle</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h3 class="section-header">
+                    <i class="fas fa-star"></i>Skills
+                </h3>
+                <div class="skills-info">
+                    <div class="info-item">
+                        <span class="info-label">Technical</span>
+                        <span class="info-value">Computer Hardware Troubleshooting</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Soft Skills</span>
+                        <span class="info-value">Versatile</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gallery for CJ -->
+<div class="gallery-overlay" id="gallery-cj">
+    <button class="gallery-close">Close Gallery</button>
+    <div class="gallery-container">
+        <div class="gallery-item">
+            <img src="cj1.jpg" alt="CJ Photo 1">
+        </div>
+        <div class="gallery-item">
+            <img src="cj2.jpg" alt="CJ Photo 2">
+        </div>
+        <div class="gallery-item">
+            <img src="cj3.jpg" alt="CJ Photo 3">
+        </div>
+        <div class="gallery-item">
+            <img src="cj4.jpg" alt="CJ Photo 4">
+        </div>
+        <div class="gallery-item">
+            <img src="cj5.jpg" alt="CJ Photo 5">
+        </div>
+        <div class="gallery-item">
+            <img src="cj6.jpg" alt="CJ Photo 6">
+        </div>
+        <div class="gallery-item">
+            <img src="cj7.jpg" alt="CJ Photo 7">
+        </div>
+        <div class="gallery-item">
+            <img src="cj8.jpg" alt="CJ Photo 8">
+        </div>
+        <div class="gallery-item">
+            <img src="cj9.jpg" alt="CJ Photo 9">
+        </div>
+        <div class="gallery-item">
+            <img src="cj10.jpg" alt="CJ Photo 10">
+        </div>
+        <div class="gallery-item">
+            <img src="cj11.jpg" alt="CJ Photo 11">
+        </div>
+        <div class="gallery-item">
+            <img src="cj12.jpg" alt="CJ Photo 12">
+        </div>
+    </div>
+</div>
+
+<!-- Gallery for Celeste -->
+<div class="gallery-overlay" id="gallery-celeste">
+    <button class="gallery-close">Close Gallery</button>
+    <div class="gallery-container">
+        <div class="gallery-item">
+            <img src="cl1.jpg" alt="Celeste Photo 1">
+        </div>
+        <div class="gallery-item">
+            <img src="cl2.jpg" alt="Celeste Photo 2">
+        </div>
+        <div class="gallery-item">
+            <img src="cl3.jpg" alt="Celeste Photo 3">
+        </div>
+        <div class="gallery-item">
+            <img src="cl4.jpg" alt="Celeste Photo 4">
+        </div>
+        <div class="gallery-item">
+            <img src="cl5.jpg" alt="Celeste Photo 5">
+        </div>
+        <div class="gallery-item">
+            <img src="cl6.jpg" alt="Celeste Photo 6">
+        </div>
+        <div class="gallery-item">
+            <img src="cl7.jpg" alt="Celeste Photo 7">
+        </div>
+        <div class="gallery-item">
+            <img src="cl8.jpg" alt="Celeste Photo 8">
+        </div>
+        <div class="gallery-item">
+            <img src="cl9.jpg" alt="Celeste Photo 9">
+        </div>
+        <div class="gallery-item">
+            <img src="cl10.jpg" alt="Celeste Photo 10">
+        </div>
+        <div class="gallery-item">
+            <img src="cl11.jpg" alt="Celeste Photo 11">
+        </div>
+        <div class="gallery-item">
+            <img src="cl12.jpg" alt="Celeste Photo 12">
+        </div>
+    </div>
+</div>
+
+<!-- Add this just before the closing </body> tag -->
+<button class="back-to-top" style="display: none;">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+</body>
+</html>
